@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Radio Button Selection</title>
+
+<script>
+function showColor()
+{
+var colors = document.getElementsByName("color");
+var selectedColor = "";
+
+for(var i = 0; i < colors.length; i++)
+{
+if(colors[i].checked)
+{
+selectedColor = colors[i].value;
+}
+}
+
+document.getElementById("result").innerHTML = "Selected Color: " + selectedColor;
+}
+</script>
+
+</head>
+<body>
+
+<h1>Select a Color</h1>
+
+<input type="radio" name="color" value="Red"> Red <br>
+<input type="radio" name="color" value="Green"> Green <br>
+<input type="radio" name="color" value="Blue"> Blue <br><br>
+
+<button onclick="showColor()">Show Selected Color</button>
+
+<p id="result"></p>
+
+<p>Register Number: 24BCE0347 | Name: KLV Prasad</p>
+
+</body>
+</html>
+
+
+

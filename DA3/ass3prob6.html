@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Information System</title>
+
+<style>
+body{
+font-family:Arial;
+background:#f0f8ff;
+}
+
+h1{
+text-align:center;
+}
+
+form{
+width:350px;
+margin:auto;
+padding:15px;
+border:1px solid #000;
+background:white;
+}
+
+table{
+border-collapse:collapse;
+margin:20px auto;
+width:70%;
+}
+
+td,th{
+border:1px solid black;
+padding:8px;
+text-align:center;
+}
+
+button{
+margin-top:10px;
+}
+</style>
+
+<script>
+
+var students = [];
+
+function Student(name, age, course)
+{
+this.name = name;
+this.age = age;
+this.course = course;
+
+this.getDetails = function()
+{
+return [this.name, this.age, this.course];
+}
+}
+
+function addStudent(formObj)
+{
+var name = formObj.elements["name"].value;
+var age = formObj.elements["age"].value;
+var course = formObj.elements["course"].value;
+
+var studentObj = new Student(name, age, course);
+
+students.push(studentObj);
+
+displayStudents();
+
+formObj.reset();
+formObj.elements["name"].focus();
+}
+
+function displayStudents()
+{
+var tableContent = "<tr><th>Name</th><th>Age</th><th>Course</th></tr>";
+
+for(var i=0;i<students.length;i++)
+{
+var data = students[i].getDetails();
+
+tableContent += "<tr>";
+tableContent += "<td>" + data[0] + "</td>";
+tableContent += "<td>" + data[1] + "</td>";
+tableContent += "<td>" + data[2] + "</td>";
+tableContent += "</tr>";
+}
+
+document.getElementById("studentTable").innerHTML = tableContent;
+}
+
+</script>
+
+</head>
+
+<body>
+
+<h1>Student Information System</h1>
+
+<form onsubmit="addStudent(this); return false;">
+
+Name:
+<input type="text" name="name" required><br><br>
+
+Age:
+<input type="number" name="age" required><br><br>
+
+Course:
+<select name="course">
+<option>Computer Science</option>
+<option>Information Technology</option>
+<option>Electronics</option>
+<option>Mechanical</option>
+</select><br><br>
+
+<button type="submit">Add Student</button>
+<button type="reset">Reset</button>
+
+</form>
+
+<table id="studentTable">
+<tr>
+<th>Name</th>
+<th>Age</th>
+<th>Course</th>
+</tr>
+</table>
+
+<p style="text-align:center;">
+Register Number: 24BCE0347 | Name: KLV Prasad
+</p>
+
+</body>
+</html>
+
+
+
+
+

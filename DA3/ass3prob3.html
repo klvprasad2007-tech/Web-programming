@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Email Address Generator</title>
+
+<script>
+function generateEmail(btn)
+{
+var fname = btn.form.elements["firstname"].value;
+var lname = btn.form.elements["lastname"].value;
+
+var email = fname + "." + lname + "@park.edu";
+
+document.getElementById("result").innerHTML = "Generated Email: " + email;
+
+btn.form.reset();
+btn.form.elements["firstname"].focus();
+}
+</script>
+
+</head>
+<body>
+
+<h1>Email Address Generator</h1>
+
+<form>
+
+First Name:
+<input type="text" name="firstname"><br><br>
+
+Last Name:
+<input type="text" name="lastname"><br><br>
+
+<button type="button" onclick="generateEmail(this)">Generate Email</button>
+
+</form>
+
+<p id="result"></p>
+
+<p>Register Number: 24BCE0347 | Name: KLV Prasad</p>
+
+</body>
+</html>
+
+
+
+

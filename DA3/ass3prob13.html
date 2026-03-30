@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Product Order Form</title>
+
+<style>
+body{
+font-family:Arial;
+background:#f2f2f2;
+}
+
+form{
+width:400px;
+margin:auto;
+padding:20px;
+background:white;
+border:1px solid black;
+}
+
+fieldset{
+margin-bottom:15px;
+}
+
+button{
+margin-top:10px;
+}
+
+#result{
+margin-top:15px;
+font-weight:bold;
+}
+</style>
+
+<script>
+function calculateTotal()
+{
+var total = 0;
+
+var items = document.querySelectorAll("input[type='checkbox']:checked");
+
+for (var item of items)
+{
+total += parseFloat(item.value);
+}
+
+document.getElementById("result").innerHTML =
+"Total Price: ₹" + total;
+}
+</script>
+
+</head>
+
+<body>
+
+<h1 style="text-align:center;">Product Order Form</h1>
+
+<form>
+
+<fieldset>
+<legend>Electronics</legend>
+
+<input type="checkbox" value="50000"> Laptop (₹50000)<br>
+<input type="checkbox" value="15000"> Tablet (₹15000)
+
+</fieldset>
+
+<fieldset>
+<legend>Accessories</legend>
+
+<input type="checkbox" value="2000"> Headphones (₹2000)<br>
+<input type="checkbox" value="1000"> Keyboard (₹1000)
+
+</fieldset>
+
+<fieldset>
+<legend>Software</legend>
+
+<input type="checkbox" value="5000"> Antivirus (₹5000)<br>
+<input type="checkbox" value="7000"> Office Suite (₹7000)
+
+</fieldset>
+
+<button type="button" onclick="calculateTotal()">Calculate Total</button>
+
+<p id="result"></p>
+
+<p>Register Number: 24BCE0347 | Name: KLV Prasad</p>
+
+</form>
+
+</body>
+</html>
+
+
+
+
+

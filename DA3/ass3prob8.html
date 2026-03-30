@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Multiplication Table</title>
+
+<script>
+function printTable()
+{
+var num = document.getElementById("number").value;
+var i = 1;
+var output = "";
+
+do
+{
+output += num + " x " + i + " = " + (num * i) + "<br>";
+i++;
+}
+while(i <= 10);
+
+document.getElementById("result").innerHTML = output;
+}
+</script>
+
+</head>
+<body>
+
+<h1>Multiplication Table using Do-While Loop</h1>
+
+Enter a number:
+<input type="text" id="number">
+
+<button onclick="printTable()">Generate Table</button>
+
+<p id="result"></p>
+
+<p>Register Number: 24BCE0347 | Name: KLV Prasad</p>
+
+</body>
+</html>
+
+
+
+

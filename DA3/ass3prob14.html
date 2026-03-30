@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Text Styling Application</title>
+
+<style>
+.boldStyle{
+font-weight:bold;
+}
+
+.italicStyle{
+font-style:italic;
+}
+
+.smallCapsStyle{
+font-variant:small-caps;
+}
+</style>
+
+<script>
+function applyStyle(styleName)
+{
+document.getElementById("message").className = styleName;
+}
+</script>
+
+</head>
+
+<body>
+
+<h1>Text Styling Application</h1>
+
+<p id="message">This is a sample message to demonstrate text styling.</p>
+
+<fieldset>
+<legend>Text Styles</legend>
+
+<button onclick="applyStyle('boldStyle')">Bold</button>
+<button onclick="applyStyle('italicStyle')">Italic</button>
+<button onclick="applyStyle('smallCapsStyle')">Small Caps</button>
+
+</fieldset>
+
+<p>Register Number: 24BCE0347 | Name: KLV Prasad</p>
+
+</body>
+</html>
+
+
+
+

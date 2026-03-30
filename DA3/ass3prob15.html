@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Overlapping Image Gallery</title>
+
+<style>
+.gallery{
+position:relative;
+width:500px;
+height:300px;
+margin:auto;
+border:1px solid black;
+}
+
+.gallery img{
+position:absolute;
+width:200px;
+height:150px;
+cursor:pointer;
+}
+
+#img1{left:20px; top:20px;}
+#img2{left:80px; top:60px;}
+#img3{left:140px; top:100px;}
+</style>
+
+<script>
+var topIndex = 1;
+
+function bringToFront(img)
+{
+img.style.zIndex = ++topIndex;
+}
+</script>
+
+</head>
+
+<body>
+
+<h1 style="text-align:center;">Overlapping Image Gallery</h1>
+
+<div class="gallery">
+
+<img id="img1" src="https://picsum.photos/200/150?1"
+onclick="bringToFront(this)">
+
+<img id="img2" src="https://picsum.photos/200/150?2"
+onclick="bringToFront(this)">
+
+<img id="img3" src="https://picsum.photos/200/150?3"
+onclick="bringToFront(this)">
+
+</div>
+
+<p style="text-align:center;">
+Register Number: 24BCE0347 | Name: KLV Prasad
+</p>
+
+</body>
+</html>
+
+
+
+
