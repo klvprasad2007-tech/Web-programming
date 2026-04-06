@@ -1,0 +1,267 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Hall Finder | Booking</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Segoe UI;
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:white;
+}
+
+/* NAVBAR */
+
+.nav{
+background:linear-gradient(90deg,#141e30,#243b55);
+padding:18px;
+text-align:center;
+}
+
+.nav a{
+color:white;
+margin:0 20px;
+text-decoration:none;
+font-weight:bold;
+}
+
+/* MAIN CONTAINER */
+
+.container{
+max-width:900px;
+margin:50px auto;
+padding:35px;
+background:rgba(255,255,255,0.15);
+border-radius:14px;
+backdrop-filter:blur(12px);
+}
+
+/* INPUTS */
+
+input{
+width:100%;
+padding:12px;
+margin-top:6px;
+margin-bottom:15px;
+border-radius:6px;
+border:none;
+}
+
+/* BUTTON */
+
+button{
+background:linear-gradient(45deg,#00c6ff,#0072ff);
+color:white;
+padding:12px 25px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* SUMMARY BOX */
+
+#summaryBox{
+background:white;
+color:black;
+padding:20px;
+border-radius:10px;
+margin-top:20px;
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:30px;
+background:white;
+color:black;
+border-radius:8px;
+overflow:hidden;
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #ddd;
+text-align:center;
+}
+
+th{
+background:#0072ff;
+color:white;
+}
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<script>
+(function(){
+emailjs.init("zPFpO2ECGQOTaK6bt");
+})();
+</script>
+
+</head>
+
+<body>
+
+<div class="nav">
+<a href="index.html">Home</a>
+<a href="booking.html">Booking</a>
+<a href="gallery.html">Gallery</a>
+<a href="contact.html">Contact</a>
+</div>
+
+<div class="container">
+
+<h2>Book Your Space</h2>
+
+<form onsubmit="sendBooking(event)">
+
+<label>Full Name</label>
+<input type="text" id="name" required>
+
+<label>Mobile Number</label>
+<input type="tel" id="phone" pattern="[0-9]{10}" required>
+
+<label>Email Address</label>
+<input type="email" id="email" required>
+
+<label>Booking Date</label>
+<input type="date" id="date" required>
+
+<label>Space Type</label>
+<br>
+
+<input type="radio" name="type" value="Event Hall" checked> Event Hall
+<input type="radio" name="type" value="Godown"> Godown
+<input type="radio" name="type" value="Guest House"> Guest House
+
+<h3>Booking Summary</h3>
+
+<div id="summaryBox">
+
+<p>Selected Space: <span id="space">Event Hall</span></p>
+<p>Booking Date: <span id="summaryDate">Not Selected</span></p>
+<p>Estimated Cost: ₹<span id="price">5000</span></p>
+
+</div>
+
+<br>
+
+<button type="submit">Confirm Booking</button>
+
+</form>
+
+<h3>Available Spaces</h3>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>Category</th>
+<th>Capacity</th>
+</tr>
+
+<tr>
+<td>Royal Convention</td>
+<td>Event Hall</td>
+<td>400 People</td>
+</tr>
+
+<tr>
+<td>Metro Warehouse</td>
+<td>Godown</td>
+<td>600 Tons</td>
+</tr>
+
+<tr>
+<td>Sunrise Stay</td>
+<td>Guest House</td>
+<td>25 Rooms</td>
+</tr>
+
+</table>
+
+</div>
+
+<script>
+
+/* PRICE SYSTEM */
+
+const prices={
+"Event Hall":5000,
+"Godown":2000,
+"Guest House":3000
+};
+
+/* UPDATE BOOKING SUMMARY */
+
+const radios=document.querySelectorAll('input[name="type"]');
+
+radios.forEach(radio=>{
+radio.addEventListener("change",updateSummary);
+});
+
+document.getElementById("date").addEventListener("change",updateSummary);
+
+function updateSummary(){
+
+const selected=document.querySelector('input[name="type"]:checked').value;
+
+document.getElementById("space").innerText=selected;
+
+document.getElementById("price").innerText=prices[selected];
+
+const date=document.getElementById("date").value;
+
+if(date!=""){
+document.getElementById("summaryDate").innerText=date;
+}
+
+}
+
+/* SEND BOOKING EMAIL */
+
+function sendBooking(event){
+
+event.preventDefault();
+
+const type=document.querySelector('input[name="type"]:checked').value;
+
+const params={
+name:document.getElementById("name").value,
+phone:document.getElementById("phone").value,
+email:document.getElementById("email").value,
+date:document.getElementById("date").value,
+type:type,
+price:prices[type]
+};
+
+emailjs.send("service_px6uiuj","template_jjqsvwg",params)
+.then(function(){
+
+window.location="confirmation.html";
+
+})
+.catch(function(error){
+
+console.log("Email failed but booking continues");
+
+/* Always redirect to thank you page */
+
+window.location="confirmation.html";
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
+```
