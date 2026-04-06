@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Weather Dashboard</title>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<style>
+body{
+font-family:Arial;
+background:#e0f7fa;
+text-align:center;
+}
+
+.container{
+width:400px;
+margin:30px auto;
+padding:20px;
+background:#fff;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+input{
+padding:8px;
+width:70%;
+}
+
+button{
+padding:8px;
+margin-left:5px;
+}
+
+.card{
+margin-top:20px;
+padding:15px;
+background:#f1f1f1;
+border-radius:8px;
+}
+</style>
+
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+const API_KEY = "YOUR_API_KEY_HERE";
+
+// Utility function
+async function fetchWeather(city)
+{
+const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
+
+const response = await fetch(url);
+const data = await response.json();
+
+return {
+city: data.name,
+temp: data.main.temp,
+desc: data.weather[0].description,
+humidity: data.main.humidity,
+wind: data.wind.speed
+};
+}
+
+// Header Component
+function Header()
+{
+return <h1>Weather Dashboard</h1>;
+}
+
+// Search Component
+function Search({onSearch})
+{
+const [city, setCity] = React.useState("");
+
+return (
+<div>
+<input
+type="text"
+value={city}
+onChange={(e)=>setCity(e.target.value)}
+placeholder="Enter city"
+/>
+<button onClick={()=>onSearch(city)}>Search</button>
+</div>
+);
+}
+
+// Dashboard Component
+function Dashboard({weather})
+{
+if(!weather) return null;
+
+return (
+<div className="card">
+<h2>{weather.city}</h2>
+<p>Temperature: {weather.temp} °C</p>
+<p>Description: {weather.desc}</p>
+<p>Humidity: {weather.humidity}%</p>
+<p>Wind Speed: {weather.wind} m/s</p>
+</div>
+);
+}
+
+// Main App
+function App()
+{
+const [weather, setWeather] = React.useState(null);
+
+const handleSearch = async (city) => {
+if(!city) return;
+
+const data = await fetchWeather(city);
+setWeather(data);
+};
+
+return (
+<div className="container">
+
+<Header />
+<Search onSearch={handleSearch} />
+<Dashboard weather={weather} />
+
+<p style={{marginTop:"15px"}}>
+Register Number: 24BCE0347 | Name: KLV Prasad
+</p>
+
+</div>
+);
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+
+</script>
+
+</body>
+</html>

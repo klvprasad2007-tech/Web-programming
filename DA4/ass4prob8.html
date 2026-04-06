@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Country Explorer</title>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<style>
+body{
+font-family:Arial;
+background:#eef6ff;
+text-align:center;
+}
+
+.container{
+width:90%;
+margin:auto;
+}
+
+input{
+padding:8px;
+width:60%;
+}
+
+button{
+padding:8px;
+margin-left:5px;
+}
+
+.grid{
+display:flex;
+flex-wrap:wrap;
+gap:15px;
+justify-content:center;
+margin-top:20px;
+}
+
+.card{
+width:220px;
+background:#fff;
+padding:10px;
+border-radius:8px;
+box-shadow:0 0 5px rgba(0,0,0,0.2);
+}
+
+.card img{
+width:100%;
+height:120px;
+object-fit:cover;
+}
+</style>
+
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+// Utility Function
+async function fetchCountries(query)
+{
+const url = `https://restcountries.com/v3.1/name/${query}`;
+const response = await fetch(url);
+const data = await response.json();
+
+return data.map(c => ({
+name: c.name.common,
+capital: c.capital ? c.capital[0] : "N/A",
+population: c.population,
+region: c.region,
+flag: c.flags.png
+}));
+}
+
+// Header Component
+function Header()
+{
+return <h1>Country Explorer</h1>;
+}
+
+// Search Component
+function Search({onSearch})
+{
+const [query, setQuery] = React.useState("");
+
+return (
+<div>
+<input
+type="text"
+value={query}
+onChange={(e)=>setQuery(e.target.value)}
+placeholder="Search country"
+/>
+<button onClick={()=>onSearch(query)}>Search</button>
+</div>
+);
+}
+
+// CountryCard Component
+function CountryCard({country})
+{
+return (
+<div className="card">
+<img src={country.flag} />
+<h4>{country.name}</h4>
+<p>Capital: {country.capital}</p>
+<p>Population: {country.population}</p>
+<p>Region: {country.region}</p>
+</div>
+);
+}
+
+// CountryList Component
+function CountryList({countries})
+{
+return (
+<div className="grid">
+{countries.map((c, index) => (
+<CountryCard key={index} country={c} />
+))}
+</div>
+);
+}
+
+// Main App
+function App()
+{
+const [countries, setCountries] = React.useState([]);
+
+const handleSearch = async (query) => {
+if(!query) return;
+const result = await fetchCountries(query);
+setCountries(result);
+};
+
+return (
+<div className="container">
+
+<Header />
+<Search onSearch={handleSearch} />
+<CountryList countries={countries} />
+
+<p style={{marginTop:"20px"}}>
+Register Number: 24BCE0347 | Name: KLV Prasad
+</p>
+
+</div>
+);
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+
+</script>
+
+</body>
+</html>

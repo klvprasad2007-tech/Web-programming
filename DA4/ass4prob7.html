@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Book Explorer</title>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<style>
+body{
+font-family:Arial;
+background:#f4f4f4;
+text-align:center;
+}
+
+.container{
+width:90%;
+margin:auto;
+}
+
+input{
+padding:8px;
+width:60%;
+}
+
+button{
+padding:8px;
+margin-left:5px;
+}
+
+.grid{
+display:flex;
+flex-wrap:wrap;
+gap:15px;
+justify-content:center;
+margin-top:20px;
+}
+
+.card{
+width:200px;
+background:#fff;
+padding:10px;
+border-radius:8px;
+box-shadow:0 0 5px rgba(0,0,0,0.2);
+}
+
+.card img{
+width:100%;
+height:250px;
+object-fit:cover;
+}
+</style>
+
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+// Utility Function
+async function fetchBooks(query)
+{
+const url = `https://www.googleapis.com/books/v1/volumes?q=${query}`;
+const response = await fetch(url);
+const data = await response.json();
+
+return data.items.map(item => ({
+title: item.volumeInfo.title,
+author: item.volumeInfo.authors ? item.volumeInfo.authors[0] : "N/A",
+image: item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.thumbnail : "",
+publisher: item.volumeInfo.publisher || "N/A",
+year: item.volumeInfo.publishedDate || "N/A"
+}));
+}
+
+// Header Component
+function Header()
+{
+return <h1>Book Explorer</h1>;
+}
+
+// Search Component
+function Search({onSearch})
+{
+const [query, setQuery] = React.useState("");
+
+return (
+<div>
+<input
+type="text"
+value={query}
+onChange={(e)=>setQuery(e.target.value)}
+placeholder="Search books"
+/>
+<button onClick={()=>onSearch(query)}>Search</button>
+</div>
+);
+}
+
+// BookCard Component
+function BookCard({book})
+{
+return (
+<div className="card">
+<img src={book.image} />
+<h4>{book.title}</h4>
+<p>Author: {book.author}</p>
+<p>Publisher: {book.publisher}</p>
+<p>Year: {book.year}</p>
+</div>
+);
+}
+
+// BookList Component
+function BookList({books})
+{
+return (
+<div className="grid">
+{books.map((b, index) => (
+<BookCard key={index} book={b} />
+))}
+</div>
+);
+}
+
+// Main App
+function App()
+{
+const [books, setBooks] = React.useState([]);
+
+const handleSearch = async (query) => {
+if(!query) return;
+const result = await fetchBooks(query);
+setBooks(result);
+};
+
+return (
+<div className="container">
+
+<Header />
+<Search onSearch={handleSearch} />
+<BookList books={books} />
+
+<p style={{marginTop:"20px"}}>
+Register Number: 24BCE0347 | Name: KLV Prasad
+</p>
+
+</div>
+);
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+
+</script>
+
+</body>
+</html>

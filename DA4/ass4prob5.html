@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>React Todo List</title>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<style>
+body{
+font-family:Arial;
+background:#f0f8ff;
+}
+
+.container{
+width:350px;
+margin:50px auto;
+padding:20px;
+background:#fff;
+border:1px solid #000;
+text-align:center;
+}
+
+input{
+width:80%;
+padding:8px;
+margin:5px 0;
+}
+
+button{
+padding:8px 12px;
+margin-left:5px;
+}
+
+ul{
+list-style:none;
+padding:0;
+margin-top:15px;
+}
+
+li{
+padding:6px;
+border-bottom:1px solid #ccc;
+}
+</style>
+
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+function TodoApp()
+{
+const [task, setTask] = React.useState("");
+const [tasks, setTasks] = React.useState([]);
+
+const addTask = () => {
+if(task.trim() === "") return;
+
+setTasks([...tasks, task]);
+setTask("");
+};
+
+return (
+<div className="container">
+
+<h2>Todo List</h2>
+
+<input
+type="text"
+value={task}
+onChange={(e)=>setTask(e.target.value)}
+placeholder="Enter a task"
+/>
+
+<button onClick={addTask}>Add</button>
+
+<ul>
+{tasks.map((t, index) => (
+<li key={index}>{t}</li>
+))}
+</ul>
+
+<p style={{marginTop:"15px"}}>
+Register Number: 24BCE0347 | Name: KLV Prasad
+</p>
+
+</div>
+);
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<TodoApp />);
+
+</script>
+
+</body>
+</html>

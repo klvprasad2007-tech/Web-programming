@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>React Welcome Message</title>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+function Welcome(props)
+{
+return (
+<div style={{color:"blue", fontFamily:"Arial", textAlign:"center"}}>
+<h2>Hello {props.name} from {props.city}!</h2>
+<p>This message is rendered using React functional components and props.</p>
+
+<p style={{marginTop:"20px"}}>
+Register Number: 24BCE0347 | Name: KLV Prasad
+</p>
+
+</div>
+);
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(<Welcome name="Prasad" city="Vellore" />);
+
+</script>
+
+</body>
+</html>
